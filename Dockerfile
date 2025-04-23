@@ -1,9 +1,13 @@
-FROM debian:trixie-slim
+FROM golang:1.20 AS build
 
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    soju
+COPY soju /soju/
+WORKDIR /soju
+RUN make soju
 
-RUN mkdir /app
+FROM gcr.io/distroless/base-debian12
+
+COPY --from=build /soju/soju /soju/sojudb /soju/sojuctl /usr/bin/
+
+WORKDIR /soju
 
 CMD ["soju", "-config", "/soju/soju.conf"]
