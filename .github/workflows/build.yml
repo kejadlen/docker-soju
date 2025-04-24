@@ -21,9 +21,9 @@ jobs:
 
       - name: Download Soju
         run: |
-          curl --remote-name https://codeberg.org/emersion/soju/releases/download/v${{ github.event.inputs.version }}/soju-${{ github.event.inputs.version }}.tar.gz
-          tar -xvzf soju-${{ github.event.inputs.version }}.tar.gz
-          mv soju-${{ github.event.inputs.version }} soju
+          make soju
+        env:
+          SOJU_VERSION: ${{ github.event.inputs.version }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
