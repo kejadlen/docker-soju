@@ -10,6 +10,14 @@ docker run -d --name soju ghcr.io/kejadlen/soju:latest
 
 ## Creating Images for New Releases
 
+Using the Justfile:
+
+```bash
+just release 0.8.2
+```
+
+Or manually via the GitHub Actions UI:
+
 1. Go to the [Actions tab](../../actions/workflows/build.yml)
 2. Click "Run workflow"
 3. Enter the soju version (e.g., `0.8.2`)
