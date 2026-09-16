@@ -12,12 +12,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
+      contents: write # create the GitHub release and its tag.
+      packages: write # push the image to GHCR.
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Download Soju
         run: |
@@ -52,3 +54,13 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOJU_VERSION: ${{ github.event.inputs.version }}
+        run: |
+          gh release create "v$SOJU_VERSION" \
+            --target "$GITHUB_SHA" \
+            --title "v$SOJU_VERSION" \
+            --notes "Docker image for [soju v$SOJU_VERSION](https://codeberg.org/emersion/soju/releases/tag/v$SOJU_VERSION), published as ghcr.io/kejadlen/soju:$SOJU_VERSION."

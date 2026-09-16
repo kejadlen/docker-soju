@@ -23,5 +23,6 @@ Or manually via the GitHub Actions UI:
 3. Enter the soju version (e.g., `0.8.2`)
 4. Click "Run workflow"
 
-This will automatically build and publish the Docker image to
-`ghcr.io/kejadlen/soju` with the specified version tag.
+This builds and publishes the Docker image to `ghcr.io/kejadlen/soju`
+with the specified version tag, then creates a matching `v`-prefixed
+GitHub release.
